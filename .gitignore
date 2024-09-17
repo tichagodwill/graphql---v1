@@ -1,0 +1,10 @@
+Binaries
+File paths:
+*node_modules/*
+*.DS_Store
+*.dll
+*.exe
+*.war
+*.jar
+*.log
+.DS_Store
