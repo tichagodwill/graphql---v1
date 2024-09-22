@@ -10,7 +10,10 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
             'Authorization': 'Basic ' + btoa(`${username}:${password}`),
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({}) 
+        body: JSON.stringify({
+            "username": username,
+            "password": password
+        })   //.then((response) => response.json()).then((data) => { console.log(data) }) 
     });
 
     if (response.ok || response.status === 204) {
