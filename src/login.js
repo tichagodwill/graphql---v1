@@ -11,21 +11,16 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "username": username,
-            "password": password
-        })   //.then((response) => response.json()).then((data) => { console.log(data) }) 
+            username: username,
+            password: password
+        }) 
+        
     });
 
     if (response.ok || response.status === 204) {
-        // Handle the case where the response is either 200-299 or 204
-        if (response.status === 204) {
-            console.log("Request processed successfully, no content returned.");
-            window.location.href = 'profile.html';
-        } else {
-            const data = await response.json();
-            localStorage.setItem('token', data.token); 
-            window.location.href = 'profile.html';
-        }
+        const data = await response.json();
+        localStorage.setItem('token', data); 
+        window.location.href = 'logout.html';
     } else {
         document.getElementById('error-message').innerText = 'Invalid Credentials';
     }

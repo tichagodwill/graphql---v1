@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./styles.css" rel="stylesheet" />
+    <title>Logout Page</title>
+</head>
+
+<body>
+    <form class="log-out">
+        <button type="submit" id="log-out" class="btn bg-blue-500 text-white px-4 py-2 rounded">
+            Log Out
+        </button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('log-out').addEventListener('click', function(e) {
+                e.preventDefault(); 
+                localStorage.removeItem('user'); 
+                window.location.href = 'login.html'; 
+            });
+        });
+        
+    </script>
+</body>
+
+</html>
