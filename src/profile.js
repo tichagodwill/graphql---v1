@@ -14,18 +14,156 @@ document.addEventListener('DOMContentLoaded', async () => {
           throw new Error('JWT not found');
       }
 
-      const query = `
-          query GetUserInfo {
-              user {
-               firstName
-                  lastName
-                  email
-                  login
-                  id
+      // 1. Queries for User Transactions
 
-              }
-          }
-      `;
+const fetchXpTransactions = `
+query RetrieveXpTransactions {
+  transaction(where: { type: { _eq: "xp" } }) {
+    id
+    type
+    amount
+    objectId
+    userId
+    createdAt
+    path
+  }
+}
+`;
+
+const fetchUpTransactions = `
+query RetrieveUpTransactions {
+  transaction(where: { type: { _eq: "up" } }) {
+    id
+    type
+    amount
+    objectId
+    userId
+    createdAt
+    path
+  }
+}
+`;
+
+const fetchDownTransactions = `
+query RetrieveDownTransactions {
+  transaction(where: { type: { _eq: "down" } }) {
+    id
+    type
+    amount
+    objectId
+    userId
+    createdAt
+    path
+  }
+}
+`;
+
+// 2. Query for User Progress
+
+const fetchUserProgress = `
+query RetrieveUserProgress {
+  progress(where: { object: { type: { _eq: "project" } } }) {
+    id
+    userId
+    objectId
+    grade
+    createdAt
+    updatedAt
+    object {
+      id
+      name
+      type
+      attrs
+    }
+  }
+}
+`;
+
+// 3. Query for User Results
+
+const fetchUserResults = `
+query RetrieveUserResults {
+  result {
+    id
+    userId
+    objectId
+    grade
+    createdAt
+    updatedAt
+  }
+}
+`;
+
+// 4. Object Data Query
+
+const fetchObjectsById = `
+query RetrieveObjects($objectIds: [Int!]!) {
+  object(where: { id: { _in: $objectIds } }) {
+    id
+    name
+    type
+    attrs
+  }
+}
+`;
+
+// 5. User Details Query
+
+const fetchUserInfo = `
+query RetrieveUserInfo($accountId: Int!) {
+  user {
+    id
+    login
+    totalUp
+    totalDown
+    auditRatio
+  }
+  event_user(where: { userId: { _eq: $accountId }, eventId: {_eq: 20}}){
+    level
+    userAuditRatio
+  }
+}
+`;
+
+// 6. Basic User Information Query
+
+const fetchBasicUserInfo = `
+query RetrieveBasicUser {
+  user {
+    id
+    login
+  }
+}
+`;
+
+// 7. Query for User Skills
+
+const fetchUserSkills = `
+query RetrieveUserSkills {
+  user {
+    transactions(
+      order_by: [{ type: desc }, { amount: desc }]
+      distinct_on: [type]
+      where: {
+        type: { _in: ["skill_js", "skill_go", "skill_html", "skill_prog", "skill_front-end", "skill_back-end"] }
+      }
+    ) {
+      type
+      amount
+    }
+  }
+}
+`;
+
+// 8. User Statistics Query
+
+const fetchUserStats = `
+query RetrieveDeveloperStatus {
+  user {
+    attrs
+  }
+}
+`;
 
       const response = await fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
           method: 'POST',
