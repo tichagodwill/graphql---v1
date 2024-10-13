@@ -110,15 +110,15 @@ const initialize = async () => {
       // Color determination
       const upColor = auditInfo.totalUp >= auditInfo.totalDown ? '#28a745' : '#dc3545';
       const downColor = auditInfo.totalDown >= auditInfo.totalUp ? '#17a2b8' : '#ffc107';
-      document.getElementById('audit-ratio-text').textContent = formattedAuditRatio;
 
       // Create or update progress bars
       createProgressBar('#total-audits-done-progress', upPercentage, upColor);
       createProgressBar('#total-audits-received-progress', downPercentage, downColor);
 
       // Update displayed text
-      // document.getElementById('total-audits-done-text').textContent = totalUpFormatted;
-      // document.getElementById('total-audits-received-text').textContent = totalDownFormatted;
+      document.getElementById('total-audits-done-text').textContent = totalUpFormatted;
+      document.getElementById('total-audits-received-text').textContent = totalDownFormatted;
+      document.getElementById('audit-ratio-text').textContent = formattedAuditRatio;
     }
 
     refreshProgressBars();
@@ -131,7 +131,7 @@ const initialize = async () => {
     // Format experience points for display
     const experienceText = experiencePoints >= 999900 
       ? `${(experiencePoints / 1000000).toFixed(2)} MB`
-      : `${Math.floor(experiencePoints / 1000)} kB`;``
+      : `${Math.floor(experiencePoints / 1000)} kB`;
       
     document.getElementById('xp-value').textContent = experienceText;
 
